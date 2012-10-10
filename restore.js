@@ -11,7 +11,7 @@
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       input = _ref[_i];
       $input = $(input);
-      if (inputData[i] === null) {
+      if (inputData[i] === null || typeof inputData[i] === 'undefined') {
         i++;
         continue;
       }
@@ -39,8 +39,8 @@
     _results = [];
     for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
       option = _ref2[_k];
-      if (optionData[k] !== null) {
-        $(option).attr('selected', 'selected').change();
+      if (optionData[k] != null) {
+        $(option).prop('selected', true).change();
       }
       _results.push(k++);
     }

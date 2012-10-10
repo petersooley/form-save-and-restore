@@ -6,7 +6,7 @@ $ ->
   i = 0
   for input in $('input')
     $input = $(input)
-    if inputData[i] == null
+    if inputData[i] == null or typeof inputData[i] == 'undefined'
       i++
       continue
 
@@ -25,6 +25,6 @@ $ ->
 
   k = 0
   for option in $('option')
-    if optionData[k] != null
-      $(option).attr('selected', 'selected').change()
+    if optionData[k]?
+      $(option).prop('selected', true).change()
     k++
