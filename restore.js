@@ -6,7 +6,6 @@
     inputData = JSON.parse(localStorage.getItem('inputData'));
     taData = JSON.parse(localStorage.getItem('taData'));
     optionData = JSON.parse(localStorage.getItem('optionData'));
-    console.log('restoring...');
     i = 0;
     _ref = $('input');
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
