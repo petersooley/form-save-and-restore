@@ -1,30 +1,58 @@
 $ ->
-	inputData = JSON.parse(localStorage.getItem('inputData'))
-	taData = JSON.parse(localStorage.getItem('taData'))
-	optionData = JSON.parse(localStorage.getItem('optionData'))
+	url = window.location.pathname
+	key = 'formSaveAndRestore'
+	data = localStorage.getItem(key)
+	return unless data
+	savedData = JSON.parse(data)
+	return unless savedData[url]
+	saved = savedData[url]
 
-	i = 0
-	for input in $('input')
-		$input = $(input)
-		if inputData[i] == null or typeof inputData[i] == 'undefined'
-			i++
-			continue
 
-		type = $input.attr('type')
-		switch type
-			when 'text', 'password'
-				$input.val(inputData[i]).change()
-			when 'checkbox', 'radio'
-				$input.attr('checked', 'checked').change()
-		i++
+	# INPUT ELEMENTS
 
-	j = 0
-	for textarea in $('textarea')
-		$(textarea).val(taData[j]).change()
-		j++
+	for name, savedInputs of saved.inputs
+		# find all inputs with this name and loop through them
+		inputs = $('input[name="'+name+'"]')
+		i = 0
+		for input in inputs
+			++i
+			# only set a value if a value was saved for it
+			if i of savedInputs
+				val = savedInputs[i]
 
-	k = 0
-	for option in $('option')
-		if optionData[k]?
-			$(option).prop('selected', true).change()
-		k++
+				# set the value based on this elements type
+				switch $(input).attr('type')
+					when 'checkbox','radio'
+						$(input).prop('checked', val == 'checked').change()
+					when 'text','password','date','datetime','datetime-local','email','color','month','number','range','tel','url','week'
+						$(input).val(val).change()
+
+
+
+	# TEXTAREA ELEMENTS
+
+	for name, savedTexts of saved.texts
+		# find all texts with this name and loop through them
+		texts = $('textarea[name="'+name+'"]')
+		i = 0
+		for textarea in texts
+			++i
+			# only set a value if a value was saved for it
+			if i of savedTexts
+				$(textarea).val(savedTexts[i]).change()
+
+
+
+	# SELECT ELEMENTS
+
+	for name, savedSelects of saved.selects
+		# find all selects with this name and looop through them
+		selects = $('select[name="'+name+'"]')
+		i = 0
+		for select in selects
+			++i
+			# only set a value if a value was saved for it
+			if i of savedSelects
+				$(select).val(savedSelects[i]).change()
+
+
